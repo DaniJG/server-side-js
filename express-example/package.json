@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon --ignore 'test/**/*' ./index.js",
     "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "jest \"test/unit/.*\\.spec\\.js\"",
+    "test:unit": "jest --passWithNoTests \"test/unit/.*\\.spec\\.js\"",
     "test:integration": "jest \"test/integration/.*\\.spec\\.js\""
   },
   "author": "",
