@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
 "scripts": {
-  "dev": "nodemon ./index.js",
+  "dev": "nodemon --ignore 'test/**/*' ./index.js",
   "test": "npm run test:unit && npm run test:integration",
   "test:unit": "jest \"test/unit/.*\\.spec\\.js\"",
   "test:integration": "jest \"test/integration/.*\\.spec\\.js\""
