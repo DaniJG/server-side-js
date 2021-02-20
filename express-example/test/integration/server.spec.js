@@ -1,6 +1,6 @@
 const { beforeAll, afterAll } = require("@jest/globals");
 const supertest = require('supertest');
-const server = require('../../server');
+const server = require('../../server/app.js');
 
 describe('the server', () => {
   let request;
@@ -14,7 +14,7 @@ describe('the server', () => {
   test('GET / returns a helloworld plaintext', async done => {
     const res = await request
       .get('/')
-      .expect('Content-Type', 'text/plain')
+      .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(200);
 
     expect(res.text).toMatch(/Hello world!\s+The current time is .*\s+and I am running on the .* platform/);
