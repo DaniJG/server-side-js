@@ -36,7 +36,12 @@ app.get('/async-error', async (req, res, next) => {
 
 app.get('/',
   (req, res, next) => {
-    // console.log('I am a middleware function invoked before the final handler!');
+    console.log('I am a middleware function invoked before the final handler!');
+    req.foo = 42;
+    next();
+  },
+  (req, res, next) => {
+    console.log(`the req object works as the "request context". A previous middleware set a property: ${req.foo}`);
     next();
   },
   (req, res) => {

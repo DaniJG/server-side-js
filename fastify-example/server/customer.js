@@ -5,6 +5,11 @@ let customers = [
 
 const customerRoutes = async function (fastify, opts) {
 
+  // fastify.addHook('onRequest', (request, reply, done) => {
+  //   console.log(`${request.method.toUpperCase()}: ${request.url}`);
+  //   done();
+  // });
+
   fastify.get('/', (req, reply) => {
     return customers;
   });
