@@ -20,4 +20,15 @@ describe('the server', () => {
     expect(res.text).toMatch(/Hello world!\s+The current time is .*\s+and I am running on the .* platform/);
     done();
   });
+
+  test('GET /whoami returns the user provided through a global hook and decorator', async done => {
+    const res = await request
+      .get('/whoami')
+      .expect('Content-Type', 'application/json; charset=utf-8')
+      .expect(200);
+
+      expect(res.body).toMatchObject({name: 'Sofia'});
+    done();
+  });
+
 });

@@ -14,6 +14,19 @@ app.use(express.static('./public'));
 app.use(express.json());
 app.use('/customer', customer);
 
+
+const authMiddleware = (req, res, next) => {
+  // extract user information from the request cookies/header
+  req.user = { name: 'Sofia' };
+  // now any handler function after this point can use req.user
+  next();
+};
+app.use(authMiddleware);
+app.get('/whoami', (req, res) => {
+  return res.send(req.user);
+});
+
+
 app.get('/sync-error', (req, res) => {
   throw new Error('Test the error handler');
 });
