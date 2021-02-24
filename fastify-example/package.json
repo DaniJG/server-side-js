@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "nodemon --ignore 'test/**/*' ./index.js",
     "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "jest --passWithNoTests \"test/unit/.*\\.spec\\.js\"",
-    "test:integration": "jest \"test/integration/.*\\.spec\\.js\""
+    "test:unit": "jest --passWithNoTests --silent \"test/unit/.*\\.spec\\.js\"",
+    "test:integration": "jest --silent \"test/integration/.*\\.spec\\.js\""
   },
   "author": "",
   "license": "ISC",

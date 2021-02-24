@@ -1,10 +1,12 @@
 const { beforeAll, afterAll } = require("@jest/globals");
 const supertest = require('supertest');
-const fastify = require('../../server/app.js');
+const fastify = require('fastify')({ logger: false });
+const app = require('../../server/app.js');
 
 describe('the server', () => {
   let request;
   beforeAll(async () => {
+    fastify.register(app);
     await fastify.ready();
     request = supertest(fastify.server);
   });
