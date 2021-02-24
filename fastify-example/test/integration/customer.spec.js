@@ -32,6 +32,16 @@ describe('the customer API', () => {
       .expect(201);
   });
 
+  test('POST /customer returns 400 when missing required property', async done => {
+    const res = await request
+      .post('/customer')
+      .send({it: 'is missing required properties'})
+      .expect(400);
+
+    expect(res.body).toMatchObject({error: 'Bad Request', message: "body should have required property 'id'"});
+    done();
+  });
+
   test('GET /customer/:id returns customer by id', async done => {
     const res = await request
       .get('/customer/999')

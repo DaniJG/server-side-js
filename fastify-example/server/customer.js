@@ -20,10 +20,33 @@ const customerRoutes = async function (fastify, opts) {
     return customer;
   });
 
-  fastify.post('/', (req, reply) => {
-    customers = [...customers, req.body];
-    reply.statusCode = 201;
-    reply.send();
+  // Shorthand request declaration
+
+  // fastify.post('/', (req, reply) => {
+  //   customers = [...customers, req.body];
+  //   reply.statusCode = 201;
+  //   reply.send();
+  // });
+
+  // Generic request declaration including request schema/validation
+  fastify.route({
+    method: 'POST',
+    path: '/',
+    schema: {
+      body: {
+        type: 'object',
+        properties: {
+          id: { type: 'string' },
+          name: { type: 'string' }
+        },
+        required: ['id', 'name']
+      }
+    },
+    handler: (req, reply) => {
+      customers = [...customers, req.body];
+      reply.statusCode = 201;
+      reply.send();
+    }
   });
 
 };

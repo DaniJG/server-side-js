@@ -40,7 +40,7 @@ const userContext = async (fastifyInstance, opts) => {
 fastify.register(fp(userContext));
 
 fastify.get('/', async (request, reply) => {
-  request.log.info('hello logger!');
+  request.log.info({extra: 'metadata'}, 'hello logger! %s', 'foo');
   return `Hello world!
   The current time is ${ new Date() }
   and I am running on the ${ process.platform } platform`;
@@ -52,6 +52,20 @@ fastify.get('/whoami', async (request, reply) => {
 
 fastify.register(customer, { prefix: '/customer' });
 
+fastify.route({
+method: 'GET',
+path: '/response-serialization',
+schema: {
+  response: {
+    '2xx': {
+      name: { type: 'string' }
+    }
+  }
+},
+handler: (req, reply) => {
+  return {name: 'Sofia', someSensitiveProperty:'foo', anotherProperty: 'bar'};
+}
+});
 
 const loadDataFromDb = () => {
   return new Promise((resolve, reject) =>
@@ -85,9 +99,9 @@ fastify.get('/async-callback', (request, reply) => {
   });
 });
 
-fastify.setErrorHandler(function (error, request, reply) {
-  console.log(`Found error: ${error}`);
-  reply.status(500).send(error)
-});
+// fastify.setErrorHandler(function (error, request, reply) {
+//   console.log(`Found error: ${error}`);
+//   reply.status(500).send(error)
+// });
 
 module.exports = fastify;
