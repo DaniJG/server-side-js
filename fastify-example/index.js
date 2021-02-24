@@ -1,3 +1,6 @@
+// Note this file is not necessary when running the project using fastify-cli!
+// Only if you want to run directly from node or a different tool like nodemon, would you need this file
+
 const fastify = require('fastify')({ logger: true });
 // const fastify = require('fastify')({
 //   logger: {
