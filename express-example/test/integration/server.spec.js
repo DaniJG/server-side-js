@@ -4,31 +4,31 @@ const server = require('../../server/app.js');
 
 describe('the server', () => {
   let request;
+  let listener;
   beforeAll(() => {
-    request = supertest(server);
+    listener = server.listen(0);
+    request = supertest(listener);
   });
   afterAll(done => {
-    server.close(done);
+    listener.close(done);
   });
 
-  test('GET / returns a helloworld plaintext', async done => {
+  test('GET / returns a helloworld plaintext', async () => {
     const res = await request
       .get('/')
       .expect('Content-Type', 'text/html; charset=utf-8')
       .expect(200);
 
     expect(res.text).toMatch(/Hello world!\s+The current time is .*\s+and I am running on the .* platform/);
-    done();
   });
 
-  test('GET /whoami returns the user provided through a global hook and decorator', async done => {
+  test('GET /whoami returns the user provided through a global hook and decorator', async () => {
     const res = await request
       .get('/whoami')
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(200);
 
       expect(res.body).toMatchObject({name: 'Sofia'});
-    done();
   });
 
 });

@@ -14,7 +14,7 @@ describe('the customer API', () => {
     fastify.close(done);
   });
 
-  test('GET /customer returns a list of customers', async done => {
+  test('GET /customer returns a list of customers', async () => {
     const res = await request
       .get('/customer')
       .expect(200)
@@ -24,7 +24,6 @@ describe('the customer API', () => {
       {id: '111', name: 'Foo'},
       {id: '222', name: 'Bar'}
     ]);
-    done();
   });
 
   test('POST /customer can add a new customer', () => {
@@ -34,24 +33,22 @@ describe('the customer API', () => {
       .expect(201);
   });
 
-  test('POST /customer returns 400 when missing required property', async done => {
+  test('POST /customer returns 400 when missing required property', async () => {
     const res = await request
       .post('/customer')
       .send({it: 'is missing required properties'})
       .expect(400);
 
     expect(res.body).toMatchObject({error: 'Bad Request', message: "body should have required property 'id'"});
-    done();
   });
 
-  test('GET /customer/:id returns customer by id', async done => {
+  test('GET /customer/:id returns customer by id', async () => {
     const res = await request
       .get('/customer/999')
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8');
 
     expect(res.body).toMatchObject({id:'999', name:'test'});
-    done();
   });
 
 });

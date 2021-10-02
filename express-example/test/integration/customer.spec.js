@@ -4,14 +4,16 @@ const server = require('../../server/app.js');
 
 describe('the customer API', () => {
   let request;
+  let listener;
   beforeAll(() => {
-    request = supertest(server);
+    listener = server.listen(0);
+    request = supertest(listener);
   });
   afterAll(done => {
-    server.close(done);
+    listener.close(done);
   });
 
-  test('GET /customer returns a list of customers', async done => {
+  test('GET /customer returns a list of customers', async () => {
     const res = await request
       .get('/customer')
       .expect(200)
@@ -21,7 +23,6 @@ describe('the customer API', () => {
       {id: '111', name: 'Foo'},
       {id: '222', name: 'Bar'}
     ]);
-    done();
   });
 
   test('POST /customer can add a new customer', () => {
@@ -31,14 +32,13 @@ describe('the customer API', () => {
       .expect(201);
   });
 
-  test('GET /customer/:id returns customer by id', async done => {
+  test('GET /customer/:id returns customer by id', async () => {
     const res = await request
       .get('/customer/999')
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8');
 
     expect(res.body).toMatchObject({id:'999', name:'test'});
-    done();
   });
 
 });
